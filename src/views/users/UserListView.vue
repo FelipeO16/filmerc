@@ -21,17 +21,20 @@
 
     <BaseCard>
       <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
-        <BaseInput
-          v-model="filters.search"
-          placeholder="Buscar por nome ou documento..."
-          @input="debouncedSearch"
-        >
-          <template #suffix>
-            <el-icon class="text-gray-400">
-              <Search />
-            </el-icon>
-          </template>
-        </BaseInput>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Buscar</label>
+          <BaseInput
+            v-model="filters.search"
+            placeholder="Buscar por nome ou documento..."
+            @input="debouncedSearch"
+          >
+            <template #suffix>
+              <el-icon class="text-gray-400">
+                <Search />
+              </el-icon>
+            </template>
+          </BaseInput>
+        </div>
 
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
@@ -201,7 +204,9 @@ let searchTimeout: number
 
 function debouncedSearch() {
   clearTimeout(searchTimeout)
-  searchTimeout = setTimeout(() => {}, 300)
+  searchTimeout = setTimeout(() => {
+    // A busca é reativa através do computed, não precisa fazer nada aqui
+  }, 300)
 }
 
 function clearFilters() {
