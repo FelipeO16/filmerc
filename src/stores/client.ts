@@ -165,13 +165,17 @@ export const useClientStore = defineStore('client', () => {
     return (filters: ClientFilters) => {
       let result = clients.value
 
-      if (filters.search) {
-        const search = filters.search.toLowerCase()
+      if (filters.search && filters.search.trim() !== '') {
+        const search = filters.search.toLowerCase().trim()
         result = result.filter(client =>
           client.name.toLowerCase().includes(search) ||
           client.lastName.toLowerCase().includes(search) ||
           `${client.name} ${client.lastName}`.toLowerCase().includes(search) ||
-          client.cpf.replace(/\D/g, '').includes(search.replace(/\D/g, ''))
+          (
+            /\d/.test(search) &&
+            search.replace(/\D/g, '').length > 0 &&
+            client.cpf.replace(/\D/g, '').includes(search.replace(/\D/g, ''))
+          )
         )
       }
 
