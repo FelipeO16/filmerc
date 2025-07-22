@@ -10,10 +10,7 @@
         </p>
       </div>
       <div class="mt-4 flex md:mt-0 md:ml-4">
-        <BaseButton variant="primary" @click="$router.push('/users/create')">
-          <el-icon class="mr-2">
-            <Plus />
-          </el-icon>
+        <BaseButton variant="primary" @click="$router.push('/users/create')" icon="Plus">
           Novo Usuário
         </BaseButton>
       </div>
@@ -50,7 +47,9 @@
         </div>
 
         <div class="flex items-end">
-          <BaseButton variant="outline" @click="clearFilters"> Limpar Filtros </BaseButton>
+          <BaseButton variant="outline" @click="clearFilters" class="w-full" icon="Refresh">
+            Limpar Filtros
+          </BaseButton>
         </div>
       </div>
     </BaseCard>
@@ -127,10 +126,7 @@
               </td>
               <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                 <div class="flex items-center justify-end space-x-2">
-                  <BaseButton variant="outline" size="small" @click="editUser(user.id)">
-                    <el-icon class="mr-1">
-                      <Edit />
-                    </el-icon>
+                  <BaseButton variant="outline" size="small" @click="editUser(user.id)" icon="Edit">
                     Editar
                   </BaseButton>
 
@@ -140,10 +136,8 @@
                     size="small"
                     @click="deactivateUser(user.id)"
                     :loading="loading"
+                    icon="Close"
                   >
-                    <el-icon class="mr-1">
-                      <Close />
-                    </el-icon>
                     Desativar
                   </BaseButton>
                 </div>
@@ -178,7 +172,7 @@ import type { UserFilters } from '@/types'
 import BaseCard from '@/components/atoms/BaseCard.vue'
 import BaseInput from '@/components/atoms/BaseInput.vue'
 import BaseButton from '@/components/atoms/BaseButton.vue'
-import { Plus, Search, Edit, Close, User } from '@element-plus/icons-vue'
+import { Search, User } from '@element-plus/icons-vue'
 import { format } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 
@@ -205,9 +199,7 @@ let searchTimeout: number
 
 function debouncedSearch() {
   clearTimeout(searchTimeout)
-  searchTimeout = setTimeout(() => {
-    // A busca é reativa através do computed, não precisa fazer nada aqui
-  }, 300)
+  searchTimeout = setTimeout(() => {}, 300)
 }
 
 function clearFilters() {

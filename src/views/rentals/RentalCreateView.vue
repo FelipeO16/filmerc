@@ -63,10 +63,7 @@
         <div>
           <div class="flex justify-between items-center mb-4">
             <label class="block text-sm font-medium text-gray-700">Filmes Selecionados</label>
-            <BaseButton type="button" variant="outline" @click="showMovieSearch = true">
-              <el-icon class="mr-2">
-                <Plus />
-              </el-icon>
+            <BaseButton type="button" variant="outline" @click="showMovieSearch = true" icon="Plus">
               Adicionar Filme
             </BaseButton>
           </div>
@@ -159,10 +156,7 @@
                 @keyup.enter="searchMovies"
               />
             </div>
-            <BaseButton @click="searchMovies" :loading="movieSearchLoading">
-              <el-icon class="mr-2">
-                <Search />
-              </el-icon>
+            <BaseButton @click="searchMovies" :loading="movieSearchLoading" icon="Search">
               Buscar
             </BaseButton>
           </div>
@@ -240,7 +234,7 @@ import type { Movie, CreateRentalRequest } from '@/types'
 import BaseCard from '@/components/atoms/BaseCard.vue'
 import BaseInput from '@/components/atoms/BaseInput.vue'
 import BaseButton from '@/components/atoms/BaseButton.vue'
-import { Plus, Film, Close, Search, Document } from '@element-plus/icons-vue'
+import { Film, Close, Document } from '@element-plus/icons-vue'
 
 const router = useRouter()
 const clientStore = useClientStore()
@@ -271,7 +265,7 @@ const errors = reactive({
 })
 
 function disabledDate(time: Date) {
-  return time.getTime() < Date.now() + 24 * 60 * 60 * 1000 // Desabilita datas anteriores a amanhã
+  return time.getTime() < Date.now() + 24 * 60 * 60 * 1000
 }
 
 const availableClients = computed(() => {
@@ -279,11 +273,9 @@ const availableClients = computed(() => {
 })
 
 onMounted(() => {
-  // Garante que os clientes sejam carregados
   if (clientStore.clients.length === 0) {
     clientStore.loadClients()
   }
-  // Define data mínima como amanhã
   const tomorrow = new Date()
   tomorrow.setDate(tomorrow.getDate() + 1)
   form.returnDate = tomorrow.toISOString().split('T')[0]

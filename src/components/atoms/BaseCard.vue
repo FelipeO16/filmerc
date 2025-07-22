@@ -22,6 +22,7 @@ interface Props {
   shadow?: 'none' | 'small' | 'medium' | 'large'
   border?: boolean
   rounded?: boolean
+  variant?: 'default' | 'glass' | 'gradient'
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -29,24 +30,37 @@ const props = withDefaults(defineProps<Props>(), {
   shadow: 'medium',
   border: true,
   rounded: true,
+  variant: 'default',
 })
 
 const cardClasses = computed(() => {
-  const classes = ['bg-white', 'overflow-hidden']
+  const classes = ['overflow-hidden', 'transition-all', 'duration-300']
+
+  if (props.variant === 'glass') {
+    classes.push('bg-white/80', 'backdrop-blur-sm', 'border-white/20')
+  } else if (props.variant === 'gradient') {
+    classes.push('bg-gradient-to-br', 'from-white', 'to-blue-50/50')
+  } else {
+    classes.push('bg-white')
+  }
 
   if (props.border) {
-    classes.push('border', 'border-gray-200')
+    if (props.variant === 'glass') {
+      classes.push('border', 'border-white/20')
+    } else {
+      classes.push('border', 'border-gray-200/50')
+    }
   }
 
   if (props.rounded) {
-    classes.push('rounded-lg')
+    classes.push('rounded-2xl')
   }
 
   const shadowClasses = {
     none: [],
     small: ['shadow-sm'],
-    medium: ['shadow-md'],
-    large: ['shadow-lg'],
+    medium: ['shadow-lg', 'shadow-gray-200/50'],
+    large: ['shadow-xl', 'shadow-gray-300/50'],
   }
 
   classes.push(...shadowClasses[props.shadow])
@@ -55,13 +69,19 @@ const cardClasses = computed(() => {
 })
 
 const headerClasses = computed(() => {
-  const classes = ['border-b', 'border-gray-200']
+  const classes = ['border-b']
+
+  if (props.variant === 'glass') {
+    classes.push('border-white/20')
+  } else {
+    classes.push('border-gray-200/50')
+  }
 
   const paddingClasses = {
     none: [],
-    small: ['px-3', 'py-2'],
-    medium: ['px-4', 'py-3'],
-    large: ['px-6', 'py-4'],
+    small: ['px-4', 'py-3'],
+    medium: ['px-6', 'py-4'],
+    large: ['px-8', 'py-6'],
   }
 
   classes.push(...paddingClasses[props.padding])
@@ -72,22 +92,28 @@ const headerClasses = computed(() => {
 const bodyClasses = computed(() => {
   const paddingClasses = {
     none: [],
-    small: ['p-3'],
-    medium: ['p-4'],
-    large: ['p-6'],
+    small: ['p-4'],
+    medium: ['p-6'],
+    large: ['p-8'],
   }
 
   return paddingClasses[props.padding]
 })
 
 const footerClasses = computed(() => {
-  const classes = ['border-t', 'border-gray-200', 'bg-gray-50']
+  const classes = ['border-t']
+
+  if (props.variant === 'glass') {
+    classes.push('border-white/20', 'bg-white/30')
+  } else {
+    classes.push('border-gray-200/50', 'bg-gray-50/50')
+  }
 
   const paddingClasses = {
     none: [],
-    small: ['px-3', 'py-2'],
-    medium: ['px-4', 'py-3'],
-    large: ['px-6', 'py-4'],
+    small: ['px-4', 'py-3'],
+    medium: ['px-6', 'py-4'],
+    large: ['px-8', 'py-6'],
   }
 
   classes.push(...paddingClasses[props.padding])

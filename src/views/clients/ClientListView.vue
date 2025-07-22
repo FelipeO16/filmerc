@@ -1,28 +1,27 @@
 <template>
-  <div class="space-y-6">
+  <div class="space-y-8">
     <div class="md:flex md:items-center md:justify-between">
       <div class="flex-1 min-w-0">
-        <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">
+        <h2
+          class="text-3xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent"
+        >
           Gerenciamento de Clientes
         </h2>
-        <p class="mt-1 text-sm text-gray-500">
+        <p class="mt-2 text-lg text-gray-600">
           Gerencie clientes, informações de contato e endereços.
         </p>
       </div>
       <div class="mt-4 flex md:mt-0 md:ml-4">
-        <BaseButton variant="primary" @click="$router.push('/clients/create')">
-          <el-icon class="mr-2">
-            <Plus />
-          </el-icon>
+        <BaseButton variant="primary" @click="$router.push('/clients/create')" icon="Plus">
           Novo Cliente
         </BaseButton>
       </div>
     </div>
 
-    <BaseCard>
-      <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+    <BaseCard variant="glass" padding="large">
+      <div class="grid grid-cols-1 gap-6 sm:grid-cols-3">
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">Buscar</label>
+          <label class="block text-sm font-semibold text-gray-700 mb-2">Buscar</label>
           <BaseInput
             v-model="filters.search"
             placeholder="Buscar por nome, sobrenome ou documento..."
@@ -37,7 +36,7 @@
         </div>
 
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
+          <label class="block text-sm font-semibold text-gray-700 mb-2">Status</label>
           <el-select
             v-model="filters.status"
             placeholder="Todos os status"
@@ -50,85 +49,91 @@
         </div>
 
         <div class="flex items-end">
-          <BaseButton variant="outline" @click="clearFilters">Limpar Filtros</BaseButton>
+          <BaseButton variant="outline" @click="clearFilters" class="w-full h-10" icon="Refresh">
+            Limpar Filtros
+          </BaseButton>
         </div>
       </div>
     </BaseCard>
 
-    <BaseCard>
+    <BaseCard variant="glass" padding="none">
       <div class="overflow-x-auto">
-        <table class="min-w-full divide-y divide-gray-200">
-          <thead class="bg-gray-50">
+        <table class="min-w-full divide-y divide-gray-200/50">
+          <thead class="bg-gradient-to-r from-gray-50 to-blue-50/50">
             <tr>
               <th
-                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
               >
                 Cliente
               </th>
               <th
-                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
               >
                 CPF
               </th>
               <th
-                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
               >
                 Contato
               </th>
               <th
-                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
               >
                 Status
               </th>
               <th
-                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
               >
                 Criado em
               </th>
               <th
-                class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider"
+                class="px-6 py-4 text-right text-xs font-semibold text-gray-600 uppercase tracking-wider"
               >
                 Ações
               </th>
             </tr>
           </thead>
-          <tbody class="bg-white divide-y divide-gray-200">
-            <tr v-for="client in displayedClients" :key="client.id">
+          <tbody class="bg-white/50 divide-y divide-gray-200/30">
+            <tr
+              v-for="client in displayedClients"
+              :key="client.id"
+              class="hover:bg-white/80 transition-colors"
+            >
               <td class="px-6 py-4 whitespace-nowrap">
                 <div class="flex items-center">
-                  <div class="flex-shrink-0 h-10 w-10">
+                  <div class="flex-shrink-0 h-12 w-12">
                     <div
-                      class="h-10 w-10 rounded-full bg-green-100 flex items-center justify-center"
+                      class="h-12 w-12 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow-lg"
                     >
-                      <el-icon class="h-6 w-6 text-green-600">
-                        <UserFilled />
+                      <el-icon class="h-6 w-6">
+                        <UserFilled class="text-white" />
                       </el-icon>
                     </div>
                   </div>
                   <div class="ml-4">
-                    <div class="text-sm font-medium text-gray-900">
+                    <div class="text-sm font-semibold text-gray-900">
                       {{ client.name }} {{ client.lastName }}
                     </div>
-                    <div class="text-sm text-gray-500">{{ client.email }}</div>
+                    <div class="text-sm text-gray-600">{{ client.email }}</div>
                   </div>
                 </div>
               </td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-medium">
                 {{ formatCpf(client.cpf) }}
               </td>
               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                <div>{{ client.phone }}</div>
-                <div class="text-xs text-gray-500">
+                <div class="font-medium">{{ client.phone }}</div>
+                <div class="text-sm text-gray-600">
                   {{ client.address.city }}/{{ client.address.state }}
                 </div>
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
                 <span
                   :class="[
-                    'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium',
+                    'inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold',
                     client.status === ClientStatus.ACTIVE
-                      ? 'bg-green-100 text-green-800'
-                      : 'bg-red-100 text-red-800',
+                      ? 'bg-gradient-to-r from-green-100 to-emerald-100 text-green-800 border border-green-200'
+                      : 'bg-gradient-to-r from-red-100 to-pink-100 text-red-800 border border-red-200',
                   ]"
                 >
                   {{ client.status === ClientStatus.ACTIVE ? 'Ativo' : 'Inativo' }}
@@ -139,10 +144,12 @@
               </td>
               <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                 <div class="flex items-center justify-end space-x-2">
-                  <BaseButton variant="outline" size="small" @click="editClient(client.id)">
-                    <el-icon class="mr-1">
-                      <Edit />
-                    </el-icon>
+                  <BaseButton
+                    variant="outline"
+                    size="small"
+                    @click="editClient(client.id)"
+                    icon="Edit"
+                  >
                     Editar
                   </BaseButton>
 
@@ -152,10 +159,8 @@
                     size="small"
                     @click="deactivateClient(client.id)"
                     :loading="loading"
+                    icon="Close"
                   >
-                    <el-icon class="mr-1">
-                      <Close />
-                    </el-icon>
                     Desativar
                   </BaseButton>
                 </div>
@@ -163,13 +168,20 @@
             </tr>
 
             <tr v-if="displayedClients.length === 0">
-              <td colspan="6" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
-                <div class="flex flex-col items-center justify-center py-8">
-                  <el-icon class="h-12 w-12 text-gray-400 mb-4">
-                    <UserFilled />
-                  </el-icon>
-                  <p class="text-lg font-medium text-gray-900 mb-2">Nenhum cliente encontrado</p>
-                  <p class="text-gray-500">Tente ajustar os filtros ou adicione um novo cliente.</p>
+              <td
+                colspan="6"
+                class="px-6 py-12 whitespace-nowrap text-sm text-gray-500 text-center"
+              >
+                <div class="flex flex-col items-center justify-center">
+                  <div
+                    class="w-16 h-16 bg-gradient-to-br from-gray-200 to-gray-300 rounded-full flex items-center justify-center mb-4"
+                  >
+                    <el-icon class="h-8 w-8 text-gray-400">
+                      <UserFilled />
+                    </el-icon>
+                  </div>
+                  <p class="text-lg font-semibold text-gray-900 mb-2">Nenhum cliente encontrado</p>
+                  <p class="text-gray-600">Tente ajustar os filtros ou adicione um novo cliente.</p>
                 </div>
               </td>
             </tr>
@@ -190,7 +202,7 @@ import { ClientStatus } from '@/types'
 import BaseCard from '@/components/atoms/BaseCard.vue'
 import BaseInput from '@/components/atoms/BaseInput.vue'
 import BaseButton from '@/components/atoms/BaseButton.vue'
-import { Plus, Search, Edit, Close, UserFilled } from '@element-plus/icons-vue'
+import { Search, UserFilled, Refresh } from '@element-plus/icons-vue'
 import { format } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 
@@ -216,9 +228,7 @@ let searchTimeout: number
 
 function debouncedSearch() {
   clearTimeout(searchTimeout)
-  searchTimeout = setTimeout(() => {
-    // A busca é reativa através do computed, não precisa fazer nada aqui
-  }, 300)
+  searchTimeout = setTimeout(() => {}, 300)
 }
 
 function clearFilters() {

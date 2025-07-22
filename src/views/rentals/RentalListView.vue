@@ -140,7 +140,7 @@
                   <span
                     v-for="movie in rental.movies.slice(0, 2)"
                     :key="movie.imdbID"
-                    class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800"
+                    class="inline-flex items-center rounded-full p-1 text-xs font-medium text-center bg-gray-100 text-gray-800"
                   >
                     {{ movie.Title }}
                   </span>
@@ -189,16 +189,16 @@
                     size="small"
                     @click="returnRental(rental.id)"
                     :loading="loading"
+                    icon="Check"
                   >
-                    <el-icon class="mr-1">
-                      <Check />
-                    </el-icon>
                     Devolver
                   </BaseButton>
-                  <BaseButton variant="outline" size="small" @click="viewRentalDetails(rental.id)">
-                    <el-icon class="mr-1">
-                      <View />
-                    </el-icon>
+                  <BaseButton
+                    variant="outline"
+                    size="small"
+                    @click="viewRentalDetails(rental.id)"
+                    icon="View"
+                  >
                     Detalhes
                   </BaseButton>
                 </div>
@@ -232,7 +232,7 @@ import { RentalStatus } from '@/types'
 import BaseCard from '@/components/atoms/BaseCard.vue'
 import BaseInput from '@/components/atoms/BaseInput.vue'
 import BaseButton from '@/components/atoms/BaseButton.vue'
-import { Plus, Search, UserFilled, Check, View, Tickets } from '@element-plus/icons-vue'
+import { Plus, Search, UserFilled, Tickets } from '@element-plus/icons-vue'
 import { format } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 
@@ -268,9 +268,7 @@ let searchTimeout: number
 
 function debouncedSearch() {
   clearTimeout(searchTimeout)
-  searchTimeout = setTimeout(() => {
-    // A busca é reativa através do computed, não precisa fazer nada aqui
-  }, 300)
+  searchTimeout = setTimeout(() => {}, 300)
 }
 
 function clearFilters() {
@@ -289,7 +287,6 @@ function returnRental(rentalId: string) {
 }
 
 function viewRentalDetails(rentalId: string) {
-  // TODO: Implementar modal ou página de detalhes
   console.log('Ver detalhes da locação:', rentalId)
 }
 

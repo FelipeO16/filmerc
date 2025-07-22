@@ -103,7 +103,6 @@
             </div>
           </div>
 
-          <!-- Mensagem de CEP não encontrado -->
           <div v-if="cepNotFound" class="col-span-2">
             <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
               <div class="flex items-start">
@@ -334,7 +333,6 @@ async function handleSubmit() {
 
 function formatCpf() {
   let value = form.cpf.replace(/\D/g, '')
-  // Limita a 11 dígitos
   value = value.substring(0, 11)
   value = value.replace(/(\d{3})(\d)/, '$1.$2')
   value = value.replace(/(\d{3})(\d)/, '$1.$2')
@@ -344,7 +342,6 @@ function formatCpf() {
 
 function formatPhone() {
   let value = form.phone.replace(/\D/g, '')
-  // Limita a 11 dígitos (DDD + 9 dígitos)
   value = value.substring(0, 11)
   value = value.replace(/(\d{2})(\d)/, '($1) $2')
   value = value.replace(/(\d{5})(\d)/, '$1-$2')
@@ -353,12 +350,10 @@ function formatPhone() {
 
 function formatCep() {
   let value = form.address.zipCode.replace(/\D/g, '')
-  // Limita a 8 dígitos
   value = value.substring(0, 8)
   value = value.replace(/(\d{5})(\d)/, '$1-$2')
   form.address.zipCode = value
 
-  // Reseta o estado quando o CEP é alterado
   if (value.length < 9) {
     cepNotFound.value = false
   }
@@ -379,7 +374,6 @@ async function fetchAddress() {
         form.address.state = address.state
         cepNotFound.value = false
       } else {
-        // CEP não encontrado - limpa os campos e permite edição manual
         form.address.street = ''
         form.address.neighborhood = ''
         form.address.city = ''
@@ -388,7 +382,6 @@ async function fetchAddress() {
       }
     } catch (error) {
       console.error('Erro ao buscar endereço:', error)
-      // Em caso de erro, também permite edição manual
       form.address.street = ''
       form.address.neighborhood = ''
       form.address.city = ''
@@ -398,7 +391,6 @@ async function fetchAddress() {
       cepLoading.value = false
     }
   } else {
-    // CEP incompleto - reseta o estado
     cepNotFound.value = false
   }
 }
