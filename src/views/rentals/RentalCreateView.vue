@@ -18,7 +18,9 @@
       <form @submit.prevent="handleSubmit" class="space-y-6">
         <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Cliente *</label>
+            <label class="block text-sm font-medium text-gray-700 mb-2">
+              Cliente * ({{ availableClients.length }} disponíveis)
+            </label>
             <select
               v-model="form.clientId"
               required
@@ -33,6 +35,12 @@
               </option>
             </select>
             <p v-if="errors.clientId" class="mt-1 text-sm text-red-600">{{ errors.clientId }}</p>
+            <p v-if="availableClients.length === 0" class="mt-1 text-sm text-yellow-600">
+              Nenhum cliente ativo disponível para locação.
+              <router-link to="/clients/create" class="text-blue-600 hover:text-blue-800 underline">
+                Criar novo cliente
+              </router-link>
+            </p>
           </div>
 
           <div>
@@ -230,7 +238,6 @@ import { useAuthStore } from '@/stores/auth'
 import { useNotificationStore } from '@/stores/notification'
 import { MovieService } from '@/services/movie-service'
 import type { Movie, CreateRentalRequest } from '@/types'
-import { ClientStatus } from '@/types'
 import BaseCard from '@/components/atoms/BaseCard.vue'
 import BaseInput from '@/components/atoms/BaseInput.vue'
 import BaseButton from '@/components/atoms/BaseButton.vue'
@@ -271,14 +278,14 @@ const minReturnDate = computed(() => {
 })
 
 const availableClients = computed(() => {
-  return clientStore.clients.filter(
-    (client) =>
-      client.status === ClientStatus.ACTIVE && !clientStore.hasActiveRentalsForClient(client.id),
-  )
+  return clientStore.activeClients
 })
 
 onMounted(() => {
-  clientStore.loadClients()
+  // Garante que os clientes sejam carregados
+  if (clientStore.clients.length === 0) {
+    clientStore.loadClients()
+  }
   form.returnDate = minReturnDate.value
 })
 
