@@ -170,7 +170,8 @@ export const useClientStore = defineStore('client', () => {
         result = result.filter(client =>
           client.name.toLowerCase().includes(search) ||
           client.lastName.toLowerCase().includes(search) ||
-          `${client.name} ${client.lastName}`.toLowerCase().includes(search)
+          `${client.name} ${client.lastName}`.toLowerCase().includes(search) ||
+          client.cpf.replace(/\D/g, '').includes(search.replace(/\D/g, ''))
         )
       }
 
@@ -191,10 +192,7 @@ export const useClientStore = defineStore('client', () => {
   )
 
   const availableClients = computed(() =>
-    activeClients.value.filter(async (client) => {
-      const hasActiveRentals = await hasActiveRentalsForClient(client.id)
-      return !hasActiveRentals
-    })
+    activeClients.value
   )
 
   return {
