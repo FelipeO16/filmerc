@@ -38,14 +38,15 @@
 
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
-          <select
+          <el-select
             v-model="filters.status"
-            class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            placeholder="Todos os status"
+            clearable
+            class="w-full"
           >
-            <option value="">Todos os status</option>
-            <option :value="ClientStatus.ACTIVE">Ativo</option>
-            <option :value="ClientStatus.INACTIVE">Inativo</option>
-          </select>
+            <el-option label="Ativo" :value="ClientStatus.ACTIVE" />
+            <el-option label="Inativo" :value="ClientStatus.INACTIVE" />
+          </el-select>
         </div>
 
         <div class="flex items-end">

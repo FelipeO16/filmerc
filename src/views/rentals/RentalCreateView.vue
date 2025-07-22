@@ -21,19 +21,19 @@
             <label class="block text-sm font-medium text-gray-700 mb-2">
               Cliente * ({{ availableClients.length }} disponíveis)
             </label>
-            <select
+            <el-select
               v-model="form.clientId"
-              required
-              :class="[
-                'block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent',
-                errors.clientId ? 'border-red-300' : '',
-              ]"
+              placeholder="Selecione um cliente"
+              :class="errors.clientId ? 'border-red-300' : ''"
+              class="w-full"
             >
-              <option value="">Selecione um cliente</option>
-              <option v-for="client in availableClients" :key="client.id" :value="client.id">
-                {{ client.name }} {{ client.lastName }} ({{ formatCpf(client.cpf) }})
-              </option>
-            </select>
+              <el-option
+                v-for="client in availableClients"
+                :key="client.id"
+                :label="`${client.name} ${client.lastName} (${formatCpf(client.cpf)})`"
+                :value="client.id"
+              />
+            </el-select>
             <p v-if="errors.clientId" class="mt-1 text-sm text-red-600">{{ errors.clientId }}</p>
             <p v-if="availableClients.length === 0" class="mt-1 text-sm text-yellow-600">
               Nenhum cliente ativo disponível para locação.
@@ -45,15 +45,14 @@
 
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-2">Data de Devolução *</label>
-            <input
+            <el-date-picker
               v-model="form.returnDate"
               type="date"
-              required
-              :min="minReturnDate"
-              :class="[
-                'block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent',
-                errors.returnDate ? 'border-red-300' : '',
-              ]"
+              placeholder="Selecione a data"
+              format="DD/MM/YYYY"
+              value-format="YYYY-MM-DD"
+              :disabled-date="disabledDate"
+              class="w-full"
             />
             <p v-if="errors.returnDate" class="mt-1 text-sm text-red-600">
               {{ errors.returnDate }}
@@ -271,11 +270,9 @@ const errors = reactive({
   movies: '',
 })
 
-const minReturnDate = computed(() => {
-  const tomorrow = new Date()
-  tomorrow.setDate(tomorrow.getDate() + 1)
-  return tomorrow.toISOString().split('T')[0]
-})
+function disabledDate(time: Date) {
+  return time.getTime() < Date.now() + 24 * 60 * 60 * 1000 // Desabilita datas anteriores a amanhã
+}
 
 const availableClients = computed(() => {
   return clientStore.activeClients
@@ -286,7 +283,10 @@ onMounted(() => {
   if (clientStore.clients.length === 0) {
     clientStore.loadClients()
   }
-  form.returnDate = minReturnDate.value
+  // Define data mínima como amanhã
+  const tomorrow = new Date()
+  tomorrow.setDate(tomorrow.getDate() + 1)
+  form.returnDate = tomorrow.toISOString().split('T')[0]
 })
 
 function validateForm() {

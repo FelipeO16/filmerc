@@ -36,33 +36,40 @@
 
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-1">Data de Locação</label>
-          <input
+          <el-date-picker
             v-model="filters.rentalDateFrom"
             type="date"
-            class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            placeholder="Selecione a data"
+            format="DD/MM/YYYY"
+            value-format="YYYY-MM-DD"
+            class="w-full"
           />
         </div>
 
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-1">Data de Devolução</label>
-          <input
+          <el-date-picker
             v-model="filters.returnDateFrom"
             type="date"
-            class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            placeholder="Selecione a data"
+            format="DD/MM/YYYY"
+            value-format="YYYY-MM-DD"
+            class="w-full"
           />
         </div>
 
         <div class="flex items-end space-x-2">
           <div class="flex-1">
             <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
-            <select
+            <el-select
               v-model="filters.status"
-              class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              placeholder="Todos os status"
+              clearable
+              class="w-full"
             >
-              <option value="">Todos os status</option>
-              <option :value="RentalStatus.RENTED">Alugado</option>
-              <option :value="RentalStatus.RETURNED">Entregue</option>
-            </select>
+              <el-option label="Alugado" :value="RentalStatus.RENTED" />
+              <el-option label="Entregue" :value="RentalStatus.RETURNED" />
+            </el-select>
           </div>
           <BaseButton variant="outline" @click="clearFilters">Limpar</BaseButton>
         </div>

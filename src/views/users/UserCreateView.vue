@@ -51,15 +51,10 @@
             <label class="block text-sm font-medium text-gray-700 mb-1">
               Status <span class="text-red-500">*</span>
             </label>
-            <select
-              v-model="form.status"
-              class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              required
-            >
-              <option value="">Selecione o status</option>
-              <option value="active">Ativo</option>
-              <option value="inactive">Inativo</option>
-            </select>
+            <el-select v-model="form.status" placeholder="Selecione o status" class="w-full">
+              <el-option label="Ativo" value="active" />
+              <el-option label="Inativo" value="inactive" />
+            </el-select>
             <p v-if="errors.status" class="mt-1 text-sm text-red-600">
               {{ errors.status }}
             </p>
