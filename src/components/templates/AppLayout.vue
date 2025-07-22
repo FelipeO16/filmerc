@@ -28,7 +28,7 @@
               :key="item.name"
               :to="item.to"
               :class="[
-                $route.name === item.name || $route.path.startsWith(item.to)
+                isActiveRoute(item)
                   ? 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-lg transform scale-105'
                   : 'text-gray-700 hover:bg-white/50 hover:text-blue-600 hover:shadow-md',
                 'group flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 hover-lift',
@@ -113,7 +113,7 @@
                 :to="item.to"
                 @click="isSidebarOpen = false"
                 :class="[
-                  $route.name === item.name || $route.path.startsWith(item.to)
+                  isActiveRoute(item)
                     ? 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-lg transform scale-105'
                     : 'text-gray-700 hover:bg-white/50 hover:text-blue-600 hover:shadow-md',
                   'group flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 hover-lift',
@@ -246,10 +246,16 @@ const navigationItems = [
   },
 ]
 
+function isActiveRoute(item: { name: string; to: string }) {
+  if (item.to === '/') {
+    return route.path === '/'
+  }
+
+  return route.path.startsWith(item.to)
+}
+
 const pageTitle = computed(() => {
-  const currentItem = navigationItems.find(
-    (item) => route.name === item.name || route.path.startsWith(item.to),
-  )
+  const currentItem = navigationItems.find(isActiveRoute)
   return currentItem?.label || 'Filmerc'
 })
 
