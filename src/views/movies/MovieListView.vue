@@ -252,6 +252,7 @@
 
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
+import { useRouter } from 'vue-router'
 import { MovieService } from '@/services/movie-service'
 import { useNotificationStore } from '@/stores/notification'
 import type { Movie, MovieFilters } from '@/types'
@@ -260,6 +261,7 @@ import BaseInput from '@/components/atoms/BaseInput.vue'
 import BaseButton from '@/components/atoms/BaseButton.vue'
 import { Search, Film, Warning, Document, Close } from '@element-plus/icons-vue'
 
+const router = useRouter()
 const notificationStore = useNotificationStore()
 
 const loading = ref(false)
@@ -369,8 +371,15 @@ function viewDetails(movie: Movie) {
 }
 
 function selectMovie(movie: Movie) {
-  notificationStore.showSuccess(`Filme "${movie.Title}" selecionado`)
-  selectedMovie.value = null
+  notificationStore.showSuccess(`Filme "${movie.Title}" selecionado para locação`)
+  router.push({
+    path: '/rentals/create',
+    query: {
+      movieId: movie.imdbID,
+      movieTitle: movie.Title,
+      movieYear: movie.Year,
+    },
+  })
 }
 
 function handleImageError(movie: Movie) {

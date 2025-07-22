@@ -12,7 +12,7 @@
         </p>
       </div>
       <div class="mt-4 flex md:mt-0 md:ml-4">
-        <BaseButton variant="primary" @click="$router.push('/clients/create')" icon="Plus">
+        <BaseButton variant="gradient" @click="$router.push('/clients/create')" icon="Plus">
           Novo Cliente
         </BaseButton>
       </div>

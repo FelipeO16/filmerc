@@ -224,7 +224,7 @@
 
 <script setup lang="ts">
 import { ref, reactive, computed, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import { useClientStore } from '@/stores/client'
 import { useRentalStore } from '@/stores/rental'
 import { useAuthStore } from '@/stores/auth'
@@ -237,6 +237,7 @@ import BaseButton from '@/components/atoms/BaseButton.vue'
 import { Film, Close, Document } from '@element-plus/icons-vue'
 
 const router = useRouter()
+const route = useRoute()
 const clientStore = useClientStore()
 const rentalStore = useRentalStore()
 const authStore = useAuthStore()
@@ -272,13 +273,39 @@ const availableClients = computed(() => {
   return clientStore.activeClients
 })
 
-onMounted(() => {
+onMounted(async () => {
   if (clientStore.clients.length === 0) {
     clientStore.loadClients()
   }
   const tomorrow = new Date()
   tomorrow.setDate(tomorrow.getDate() + 1)
   form.returnDate = tomorrow.toISOString().split('T')[0]
+
+  // Verificar se há um filme pré-selecionado via query params
+  const movieId = route.query.movieId as string
+  const movieTitle = route.query.movieTitle as string
+  const movieYear = route.query.movieYear as string
+
+  if (movieId && movieTitle) {
+    try {
+      const movie: Movie = {
+        imdbID: movieId,
+        Title: movieTitle,
+        Year: movieYear || '',
+        Type: 'movie',
+        Poster: '',
+      }
+
+      selectedMovies.value = [movie]
+
+      notificationStore.showSuccess(`Filme "${movieTitle}" pré-selecionado para locação`)
+
+      router.replace({ path: '/rentals/create', query: {} })
+    } catch (error) {
+      console.error('Erro ao pré-selecionar filme:', error)
+      notificationStore.showError('Erro ao pré-selecionar filme')
+    }
+  }
 })
 
 function validateForm() {
