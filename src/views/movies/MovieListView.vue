@@ -13,27 +13,33 @@
 
     <BaseCard>
       <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
-        <BaseInput
-          v-model="filters.search"
-          placeholder="Digite o nome do filme..."
-          @input="debouncedSearch"
-          @keyup.enter="performSearch"
-        >
-          <template #suffix>
-            <el-icon class="text-gray-400">
-              <Search />
-            </el-icon>
-          </template>
-        </BaseInput>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Nome do Filme</label>
+          <BaseInput
+            v-model="filters.search"
+            placeholder="Digite o nome do filme..."
+            @input="debouncedSearch"
+            @keyup.enter="performSearch"
+          >
+            <template #suffix>
+              <el-icon class="text-gray-400">
+                <Search />
+              </el-icon>
+            </template>
+          </BaseInput>
+        </div>
 
-        <BaseInput
-          v-model="filters.year"
-          placeholder="Ano (ex: 2023)"
-          type="number"
-          min="1900"
-          max="2030"
-          @input="debouncedSearch"
-        />
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Ano</label>
+          <BaseInput
+            v-model="filters.year"
+            placeholder="Ano (ex: 2023)"
+            type="number"
+            min="1900"
+            max="2030"
+            @input="debouncedSearch"
+          />
+        </div>
 
         <div class="flex items-end space-x-2">
           <BaseButton variant="primary" @click="performSearch" :loading="loading">
