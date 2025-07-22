@@ -18,7 +18,7 @@
     </div>
 
     <BaseCard>
-      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-1">Buscar Cliente</label>
           <BaseInput
@@ -58,20 +58,23 @@
           />
         </div>
 
-        <div class="flex items-end space-x-2">
-          <div class="flex-1">
-            <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
-            <el-select
-              v-model="filters.status"
-              placeholder="Todos os status"
-              clearable
-              class="w-full"
-            >
-              <el-option label="Alugado" :value="RentalStatus.RENTED" />
-              <el-option label="Entregue" :value="RentalStatus.RETURNED" />
-            </el-select>
-          </div>
-          <BaseButton variant="outline" @click="clearFilters">Limpar</BaseButton>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
+          <el-select
+            v-model="filters.status"
+            placeholder="Todos os status"
+            clearable
+            class="w-full"
+          >
+            <el-option label="Alugado" :value="RentalStatus.RENTED" />
+            <el-option label="Entregue" :value="RentalStatus.RETURNED" />
+          </el-select>
+        </div>
+
+        <div class="flex items-end">
+          <BaseButton variant="outline" @click="clearFilters" class="w-full h-10" icon="Refresh">
+            Limpar
+          </BaseButton>
         </div>
       </div>
     </BaseCard>
@@ -196,7 +199,7 @@
                   <BaseButton
                     variant="outline"
                     size="small"
-                    @click="viewRentalDetails(rental.id)"
+                    @click="viewRentalDetails(rental)"
                     icon="View"
                   >
                     Detalhes
@@ -221,6 +224,182 @@
       </div>
     </BaseCard>
   </div>
+
+  <div
+    v-if="showDetailsModal"
+    class="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 z-50"
+  >
+    <div
+      class="bg-white/95 backdrop-blur-md rounded-2xl max-w-4xl w-full max-h-[90vh] shadow-2xl border border-white/20 p-4"
+    >
+      <div class="p-4 max-h-[80vh] overflow-y-auto">
+        <div class="flex justify-between items-start mb-6">
+          <div class="flex items-center space-x-4">
+            <h3
+              class="text-2xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent"
+            >
+              Detalhes da Locação
+            </h3>
+            <span
+              :class="[
+                'inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold',
+                selectedRental?.status === RentalStatus.RENTED
+                  ? 'bg-gradient-to-r from-green-100 to-emerald-100 text-green-800 border border-green-200'
+                  : 'bg-gradient-to-r from-gray-100 to-slate-100 text-gray-800 border border-gray-200',
+              ]"
+            >
+              {{ selectedRental?.status === RentalStatus.RENTED ? 'Alugado' : 'Entregue' }}
+            </span>
+          </div>
+          <button
+            @click="showDetailsModal = false"
+            class="text-gray-400 hover:text-gray-600 transition-colors p-2 rounded-full hover:bg-gray-100"
+          >
+            <el-icon class="h-6 w-6">
+              <Close />
+            </el-icon>
+          </button>
+        </div>
+
+        <div v-if="selectedRental" class="space-y-6">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <BaseCard variant="glass" padding="large">
+              <div class="flex items-center mb-4">
+                <div
+                  class="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg mr-4"
+                >
+                  <el-icon class="h-6 w-6">
+                    <UserFilled class="text-white" />
+                  </el-icon>
+                </div>
+                <div>
+                  <h4 class="text-lg font-semibold text-gray-900">Cliente</h4>
+                  <p class="text-sm text-gray-600">Informações do cliente</p>
+                </div>
+              </div>
+              <div class="space-y-3">
+                <div class="flex items-center">
+                  <div class="flex-1">
+                    <p class="font-semibold text-gray-900">
+                      {{ selectedRental.client?.name }} {{ selectedRental.client?.lastName }}
+                    </p>
+                    <p class="text-sm text-gray-600">{{ selectedRental.client?.email }}</p>
+                  </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4 text-sm">
+                  <div>
+                    <span class="font-medium text-gray-700">CPF:</span>
+                    <span class="text-gray-900">{{
+                      formatCpf(selectedRental.client?.cpf || '')
+                    }}</span>
+                  </div>
+                  <div>
+                    <span class="font-medium text-gray-700">Telefone:</span>
+                    <span class="text-gray-900">{{ selectedRental.client?.phone }}</span>
+                  </div>
+                </div>
+              </div>
+            </BaseCard>
+
+            <BaseCard variant="glass" padding="large">
+              <div class="flex items-center mb-4">
+                <div
+                  class="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl flex items-center justify-center shadow-lg mr-4"
+                >
+                  <el-icon class="h-6 w-6">
+                    <Calendar class="text-white" />
+                  </el-icon>
+                </div>
+                <div>
+                  <h4 class="text-lg font-semibold text-gray-900">Datas</h4>
+                  <p class="text-sm text-gray-600">Período da locação</p>
+                </div>
+              </div>
+              <div class="grid grid-cols-2 gap-6">
+                <div>
+                  <p class="text-sm font-medium text-gray-700">Data de Locação</p>
+                  <p class="text-lg font-semibold text-gray-900">
+                    {{ formatDate(selectedRental.rentalDate) }}
+                  </p>
+                </div>
+                <div>
+                  <p class="text-sm font-medium text-gray-700">Data de Devolução</p>
+                  <p class="text-lg font-semibold text-gray-900">
+                    {{ formatDate(selectedRental.returnDate) }}
+                  </p>
+                </div>
+              </div>
+            </BaseCard>
+          </div>
+
+          <BaseCard variant="glass" padding="large">
+            <div class="flex items-center mb-4">
+              <div
+                class="w-12 h-12 bg-gradient-to-br from-yellow-500 to-orange-600 rounded-xl flex items-center justify-center shadow-lg mr-4"
+              >
+                <el-icon class="h-6 w-6">
+                  <Film class="text-white" />
+                </el-icon>
+              </div>
+              <div>
+                <h4 class="text-lg font-semibold text-gray-900">Filmes Alugados</h4>
+                <p class="text-sm text-gray-600">{{ selectedRental.movies?.length }} filme(s)</p>
+              </div>
+            </div>
+            <div class="flex flex-wrap gap-4">
+              <div
+                v-for="movie in selectedRental.movies"
+                :key="movie.imdbID"
+                class="flex items-center space-x-3 p-3 bg-white/50 rounded-xl border border-white/20 min-w-[280px]"
+              >
+                <div
+                  class="w-12 h-16 bg-gradient-to-br from-gray-200 to-gray-300 rounded-lg flex items-center justify-center flex-shrink-0"
+                >
+                  <el-icon class="h-6 w-6 text-gray-400">
+                    <Film class="text-white" />
+                  </el-icon>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <p class="font-semibold text-gray-900 truncate">{{ movie.Title }}</p>
+                  <p class="text-sm text-gray-600">{{ movie.Year }}</p>
+                </div>
+              </div>
+            </div>
+          </BaseCard>
+
+          <BaseCard variant="glass" padding="large">
+            <div class="flex items-center mb-4">
+              <div
+                class="w-12 h-12 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg mr-4"
+              >
+                <el-icon class="h-6 w-6 text-white">
+                  <User class="text-white" />
+                </el-icon>
+              </div>
+              <div>
+                <h4 class="text-lg font-semibold text-gray-900">Usuário Responsável</h4>
+                <p class="text-sm text-gray-600">Quem criou a locação</p>
+              </div>
+            </div>
+            <div class="flex items-center">
+              <div class="flex-1">
+                <p class="font-semibold text-gray-900">{{ selectedRental.user?.name }}</p>
+                <p class="text-sm text-gray-600">
+                  {{ formatCpf(selectedRental.user?.document || '') }}
+                </p>
+              </div>
+            </div>
+          </BaseCard>
+        </div>
+
+        <div class="mt-8 flex justify-end">
+          <BaseButton variant="outline" @click="showDetailsModal = false" icon="Close">
+            Fechar
+          </BaseButton>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -228,11 +407,20 @@ import { ref, computed, onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useRentalStore } from '@/stores/rental'
 
-import { RentalStatus } from '@/types'
+import { RentalStatus, type Rental } from '@/types'
 import BaseCard from '@/components/atoms/BaseCard.vue'
 import BaseInput from '@/components/atoms/BaseInput.vue'
 import BaseButton from '@/components/atoms/BaseButton.vue'
-import { Plus, Search, UserFilled, Tickets } from '@element-plus/icons-vue'
+import {
+  Plus,
+  Search,
+  UserFilled,
+  Tickets,
+  Close,
+  Film,
+  User,
+  Calendar,
+} from '@element-plus/icons-vue'
 import { format } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 
@@ -246,6 +434,9 @@ const filters = ref({
   returnDateFrom: '',
   status: undefined as RentalStatus | undefined,
 })
+
+const selectedRental = ref<Rental | null>(null)
+const showDetailsModal = ref(false)
 
 onMounted(() => {
   rentalStore.loadRentals()
@@ -286,8 +477,9 @@ function returnRental(rentalId: string) {
   }
 }
 
-function viewRentalDetails(rentalId: string) {
-  console.log('Ver detalhes da locação:', rentalId)
+function viewRentalDetails(rental: Rental) {
+  selectedRental.value = rental
+  showDetailsModal.value = true
 }
 
 function formatDate(date: Date) {
