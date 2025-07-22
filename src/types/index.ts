@@ -85,6 +85,7 @@ export interface Movie {
   Genre?: string
   Runtime?: string
   imdbRating?: string
+  imageError?: boolean
 }
 
 export interface MovieSearchResponse {

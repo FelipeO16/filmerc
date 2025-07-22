@@ -96,11 +96,11 @@
       >
         <div class="aspect-w-2 aspect-h-3 bg-gray-200">
           <img
-            v-if="movie.Poster && movie.Poster !== 'N/A'"
+            v-if="movie.Poster && movie.Poster !== 'N/A' && !movie.imageError"
             :src="movie.Poster"
             :alt="movie.Title"
             class="w-full h-64 object-cover"
-            @error="handleImageError"
+            @error="handleImageError(movie)"
           />
           <div v-else class="w-full h-64 bg-gray-200 flex items-center justify-center">
             <el-icon class="h-16 w-16 text-gray-400">
@@ -155,10 +155,13 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <img
-              v-if="selectedMovie.Poster && selectedMovie.Poster !== 'N/A'"
+              v-if="
+                selectedMovie.Poster && selectedMovie.Poster !== 'N/A' && !selectedMovie.imageError
+              "
               :src="selectedMovie.Poster"
               :alt="selectedMovie.Title"
               class="w-full rounded-lg shadow-md"
+              @error="handleImageError(selectedMovie)"
             />
             <div v-else class="w-full h-96 bg-gray-200 rounded-lg flex items-center justify-center">
               <el-icon class="h-24 w-24 text-gray-400">
@@ -317,9 +320,8 @@ function selectMovie(movie: Movie) {
   selectedMovie.value = null
 }
 
-function handleImageError(event: Event) {
-  const target = event.target as HTMLImageElement
-  target.style.display = 'none'
+function handleImageError(movie: Movie) {
+  movie.imageError = true
 }
 </script>
 
