@@ -11,12 +11,13 @@
       <BaseCard padding="large">
         <form class="space-y-6" @submit.prevent="handleSubmit">
           <BaseInput
-            id="document"
+            id="cpf"
             v-model="form.document"
-            label="Documento"
-            placeholder="Digite seu número de documento"
+            label="CPF"
+            placeholder="000.000.000-00"
             required
             :error="errors.document"
+            @input="formatCpf"
           />
 
           <BaseInput
@@ -35,7 +36,7 @@
         <div class="mt-6 text-center">
           <p class="text-sm text-gray-600">
             Credenciais padrão: <br />
-            Documento: <strong>12345678901</strong><br />
+            CPF: <strong>123.456.789-01</strong><br />
             Senha: <strong>admin123</strong>
           </p>
         </div>
@@ -74,7 +75,13 @@ function validateForm() {
   let isValid = true
 
   if (!form.document.trim()) {
-    errors.document = 'Documento é obrigatório'
+    errors.document = 'CPF é obrigatório'
+    isValid = false
+  } else if (form.document.replace(/\D/g, '').length !== 11) {
+    errors.document = 'CPF deve ter 11 dígitos'
+    isValid = false
+  } else if (form.document.length !== 14) {
+    errors.document = 'CPF deve estar no formato 000.000.000-00'
     isValid = false
   }
 
@@ -86,14 +93,25 @@ function validateForm() {
   return isValid
 }
 
+function formatCpf() {
+  let value = form.document.replace(/\D/g, '')
+  value = value.substring(0, 11)
+  value = value.replace(/(\d{3})(\d)/, '$1.$2')
+  value = value.replace(/(\d{3})(\d)/, '$1.$2')
+  value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2')
+  form.document = value
+}
+
 async function handleSubmit() {
   if (!validateForm()) return
 
   try {
     loading.value = true
 
+    const documentWithoutFormat = form.document.replace(/\D/g, '')
+
     const success = await authStore.login({
-      document: form.document,
+      document: documentWithoutFormat,
       password: form.password,
     })
 
