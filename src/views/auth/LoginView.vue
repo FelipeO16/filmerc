@@ -25,7 +25,7 @@
         <h2
           class="text-4xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent"
         >
-          FilmerC
+          Filmerc
         </h2>
         <p class="mt-2 text-lg text-gray-600 font-medium">Sistema de Gerenciamento</p>
         <p class="text-sm text-gray-500">Faça login para acessar sua conta</p>
@@ -78,7 +78,7 @@
       </BaseCard>
 
       <div class="text-center">
-        <p class="text-xs text-gray-500">© 2024 FilmerC. Todos os direitos reservados.</p>
+        <p class="text-xs text-gray-500">© 2024 FilMerc. Todos os direitos reservados.</p>
       </div>
     </div>
   </div>

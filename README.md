@@ -1,4 +1,4 @@
-# FilmerC - Sistema de Gerenciamento de Locadora de Filmes
+# Filmerc - Sistema de Gerenciamento de Locadora de Filmes
 
 Um sistema moderno de gerenciamento de locadora de filmes construído com Vue.js 3, TypeScript e Tailwind CSS v4. Esta aplicação fornece uma solução completa para gerenciar usuários, clientes, filmes e locações em um negócio de locadora de vídeos.
 

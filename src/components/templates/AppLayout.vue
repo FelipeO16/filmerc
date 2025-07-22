@@ -16,7 +16,7 @@
             <h1
               class="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent"
             >
-              FilmerC
+              Filmerc
             </h1>
           </div>
         </div>
@@ -166,7 +166,7 @@ const pageTitle = computed(() => {
   const currentItem = navigationItems.find(
     (item) => route.name === item.name || route.path.startsWith(item.to),
   )
-  return currentItem?.label || 'FilmerC'
+  return currentItem?.label || 'Filmerc'
 })
 
 async function handleLogout() {
