@@ -11,7 +11,7 @@
         >
           <div class="flex items-start">
             <div class="flex-shrink-0">
-              <el-icon :class="iconClasses(notification.type)">
+              <el-icon :class="iconClasses()">
                 <component :is="getIcon(notification.type)" />
               </el-icon>
             </div>

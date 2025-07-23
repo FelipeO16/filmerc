@@ -202,7 +202,7 @@ import { ClientStatus } from '@/types'
 import BaseCard from '@/components/atoms/BaseCard.vue'
 import BaseInput from '@/components/atoms/BaseInput.vue'
 import BaseButton from '@/components/atoms/BaseButton.vue'
-import { Search, UserFilled, Refresh } from '@element-plus/icons-vue'
+import { Search, UserFilled } from '@element-plus/icons-vue'
 import { format } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 
