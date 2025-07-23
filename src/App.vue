@@ -5,6 +5,7 @@ import { useAuthStore } from '@/stores/auth'
 import { useUserStore } from '@/stores/user'
 import { useClientStore } from '@/stores/client'
 import { useRentalStore } from '@/stores/rental'
+import { useSeo } from '@/composables/useSeo'
 import AppLayout from '@/components/templates/AppLayout.vue'
 import NotificationContainer from '@/components/organisms/NotificationContainer.vue'
 
@@ -12,6 +13,8 @@ const authStore = useAuthStore()
 const userStore = useUserStore()
 const clientStore = useClientStore()
 const rentalStore = useRentalStore()
+
+useSeo()
 
 onMounted(() => {
   userStore.loadUsers()

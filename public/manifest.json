@@ -1,0 +1,32 @@
+{
+  "name": "Filmerc - Sistema de Gestão para Locadora de Filmes",
+  "short_name": "Filmerc",
+  "description": "Sistema completo de gestão para locadoras de filmes. Gerencie clientes, filmes, aluguéis e usuários de forma eficiente e organizada.",
+  "start_url": "/filmerc/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#3b82f6",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "16x16 32x32",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["business", "productivity"],
+  "lang": "pt-BR",
+  "dir": "ltr"
+}

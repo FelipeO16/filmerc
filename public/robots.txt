@@ -1,0 +1,13 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://felipeo16.github.io/filmerc/sitemap.xml
+
+Disallow: /login
+Disallow: /users/create
+Disallow: /users/*/edit
+Disallow: /clients/create
+Disallow: /clients/*/edit
+Disallow: /rentals/create
+
+Crawl-delay: 1 

@@ -192,10 +192,13 @@
       <main class="flex-1 relative overflow-y-auto focus:outline-none" tabindex="0">
         <div class="py-8">
           <div class="max-w-7xl mx-auto px-6 sm:px-8 md:px-10">
+            <BaseBreadcrumb />
             <slot />
           </div>
         </div>
       </main>
+
+      <StructuredData type="WebPage" />
     </div>
   </div>
 </template>
@@ -205,6 +208,8 @@ import { ref, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import BaseButton from '@/components/atoms/BaseButton.vue'
+import BaseBreadcrumb from '@/components/atoms/BaseBreadcrumb.vue'
+import StructuredData from '@/components/atoms/StructuredData.vue'
 import { House, User, UserFilled, Film, Tickets, Menu, Close } from '@element-plus/icons-vue'
 
 const route = useRoute()
