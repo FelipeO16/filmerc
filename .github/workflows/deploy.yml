@@ -16,6 +16,10 @@ jobs:
           cache: 'npm'
       - name: Create .env file
         run: echo "VITE_OMDB_API_KEY=${{ secrets.VITE_OMDB_API_KEY }}" > .env
+      - name: Check if VITE_OMDB_API_KEY is set
+        run: echo "VITE_OMDB_API_KEY starts with:${VITE_OMDB_API_KEY:0:4}****"
+        env:
+          VITE_OMDB_API_KEY: ${{ secrets.VITE_OMDB_API_KEY }}
       - name: Install dependencies
         run: npm ci
       - name: Build
