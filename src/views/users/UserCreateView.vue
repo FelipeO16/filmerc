@@ -30,10 +30,11 @@
 
           <BaseInput
             v-model="form.document"
-            label="Documento"
-            placeholder="Digite o documento (CPF/CNPJ)"
+            label="CPF"
+            placeholder="000.000.000-00"
             required
             :error="errors.document"
+            @input="formatCpf"
           />
         </div>
 
@@ -115,10 +116,13 @@ function validateForm() {
   }
 
   if (!form.document.trim()) {
-    errors.document = 'Documento é obrigatório'
+    errors.document = 'CPF é obrigatório'
     isValid = false
-  } else if (form.document.length < 11) {
-    errors.document = 'Documento deve ter pelo menos 11 caracteres'
+  } else if (form.document.replace(/\D/g, '').length !== 11) {
+    errors.document = 'CPF deve ter 11 dígitos'
+    isValid = false
+  } else if (form.document.length > 14) {
+    errors.document = 'CPF deve ter no máximo 14 caracteres'
     isValid = false
   }
 
@@ -136,6 +140,15 @@ function validateForm() {
   }
 
   return isValid
+}
+
+function formatCpf() {
+  let value = form.document.replace(/\D/g, '')
+  value = value.substring(0, 11)
+  value = value.replace(/(\d{3})(\d)/, '$1.$2')
+  value = value.replace(/(\d{3})(\d)/, '$1.$2')
+  value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2')
+  form.document = value
 }
 
 async function handleSubmit() {
