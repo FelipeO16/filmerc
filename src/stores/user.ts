@@ -63,7 +63,7 @@ export const useUserStore = defineStore('user', () => {
       }
 
       const newUser: User = {
-        id: `user_${Date.now()}`,
+        id: `user_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
         ...userData,
         createdAt: new Date(),
         updatedAt: new Date(),
