@@ -22,6 +22,10 @@ jobs:
           VITE_OMDB_API_KEY: ${{ secrets.VITE_OMDB_API_KEY }}
       - name: Install dependencies
         run: npm ci
+      - name: Run linting
+        run: npm run lint
+      - name: Run unit tests
+        run: npm run test:unit
       - name: Build
         run: npm run build
       - name: Deploy to GitHub Pages
