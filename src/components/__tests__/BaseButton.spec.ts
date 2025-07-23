@@ -18,7 +18,7 @@ describe('BaseButton', () => {
           default: 'Clique aqui',
         },
       })
-      
+
       expect(wrapper.text()).toBe('Clique aqui')
       expect(wrapper.element.tagName).toBe('BUTTON')
     })
@@ -29,7 +29,7 @@ describe('BaseButton', () => {
           text: 'Botão com texto',
         },
       })
-      
+
       expect(wrapper.text()).toBe('Botão com texto')
       expect(wrapper.element.tagName).toBe('BUTTON')
     })
@@ -42,7 +42,7 @@ describe('BaseButton', () => {
           default: 'Botão',
         },
       })
-      
+
       expect(wrapper.classes()).toContain('bg-gradient-to-r')
       expect(wrapper.classes()).toContain('from-blue-600')
       expect(wrapper.classes()).toContain('text-white')
@@ -57,7 +57,7 @@ describe('BaseButton', () => {
           default: 'Botão',
         },
       })
-      
+
       expect(wrapper.classes()).toContain('bg-gradient-to-r')
       expect(wrapper.classes()).toContain('from-gray-600')
       expect(wrapper.classes()).toContain('text-white')
@@ -72,7 +72,7 @@ describe('BaseButton', () => {
           default: 'Botão',
         },
       })
-      
+
       expect(wrapper.classes()).toContain('bg-gradient-to-r')
       expect(wrapper.classes()).toContain('from-green-500')
       expect(wrapper.classes()).toContain('text-white')
@@ -87,7 +87,7 @@ describe('BaseButton', () => {
           default: 'Botão',
         },
       })
-      
+
       expect(wrapper.classes()).toContain('bg-gradient-to-r')
       expect(wrapper.classes()).toContain('from-red-500')
       expect(wrapper.classes()).toContain('text-white')
@@ -102,9 +102,10 @@ describe('BaseButton', () => {
           default: 'Botão',
         },
       })
-      
-      expect(wrapper.classes()).toContain('bg-gradient-to-r')
-      expect(wrapper.classes()).toContain('from-cyan-500')
+
+      expect(wrapper.classes()).toContain('bg-gradient-to-br')
+      expect(wrapper.classes()).toContain('from-blue-500')
+      expect(wrapper.classes()).toContain('to-cyan-600')
       expect(wrapper.classes()).toContain('text-white')
     })
 
@@ -117,7 +118,7 @@ describe('BaseButton', () => {
           default: 'Botão',
         },
       })
-      
+
       expect(wrapper.classes()).toContain('bg-white/80')
       expect(wrapper.classes()).toContain('text-gray-700')
       expect(wrapper.classes()).toContain('border')
@@ -134,7 +135,7 @@ describe('BaseButton', () => {
           default: 'Botão',
         },
       })
-      
+
       expect(wrapper.classes()).toContain('px-3')
       expect(wrapper.classes()).toContain('py-2')
       expect(wrapper.classes()).toContain('text-sm')
@@ -146,7 +147,7 @@ describe('BaseButton', () => {
           default: 'Botão',
         },
       })
-      
+
       expect(wrapper.classes()).toContain('px-4')
       expect(wrapper.classes()).toContain('py-2')
       expect(wrapper.classes()).toContain('text-sm')
@@ -161,7 +162,7 @@ describe('BaseButton', () => {
           default: 'Botão',
         },
       })
-      
+
       expect(wrapper.classes()).toContain('px-6')
       expect(wrapper.classes()).toContain('py-2.5')
       expect(wrapper.classes()).toContain('text-base')
@@ -178,7 +179,7 @@ describe('BaseButton', () => {
           default: 'Botão',
         },
       })
-      
+
       expect(wrapper.attributes('disabled')).toBeDefined()
       expect(wrapper.classes()).toContain('disabled:opacity-50')
       expect(wrapper.classes()).toContain('disabled:cursor-not-allowed')
@@ -193,7 +194,7 @@ describe('BaseButton', () => {
           default: 'Botão',
         },
       })
-      
+
       expect(wrapper.attributes('disabled')).toBeDefined()
       expect(wrapper.classes()).toContain('disabled:opacity-50')
       expect(wrapper.classes()).toContain('disabled:cursor-not-allowed')
@@ -208,7 +209,7 @@ describe('BaseButton', () => {
           default: 'Botão',
         },
       })
-      
+
       const spinner = wrapper.find('[data-testid="spinner"]')
       expect(spinner.exists()).toBe(true)
     })
@@ -221,9 +222,9 @@ describe('BaseButton', () => {
           default: 'Botão',
         },
       })
-      
+
       await wrapper.trigger('click')
-      
+
       expect(wrapper.emitted('click')).toBeTruthy()
     })
 
@@ -236,9 +237,9 @@ describe('BaseButton', () => {
           default: 'Botão',
         },
       })
-      
+
       await wrapper.trigger('click')
-      
+
       expect(wrapper.emitted('click')).toBeFalsy()
     })
 
@@ -251,9 +252,9 @@ describe('BaseButton', () => {
           default: 'Botão',
         },
       })
-      
+
       await wrapper.trigger('click')
-      
+
       expect(wrapper.emitted('click')).toBeFalsy()
     })
   })
@@ -268,7 +269,7 @@ describe('BaseButton', () => {
           default: 'Botão',
         },
       })
-      
+
       expect(wrapper.classes()).toContain('custom-button')
     })
 
@@ -282,7 +283,7 @@ describe('BaseButton', () => {
           default: 'Botão',
         },
       })
-      
+
       expect(wrapper.classes()).toContain('bg-gradient-to-r')
       expect(wrapper.classes()).toContain('from-green-500')
       expect(wrapper.classes()).toContain('custom-button')
@@ -300,7 +301,7 @@ describe('BaseButton', () => {
           default: 'Botão',
         },
       })
-      
+
       expect(wrapper.attributes('id')).toBe('test-button')
       expect(wrapper.attributes('data-testid')).toBe('test-button')
     })
@@ -314,7 +315,7 @@ describe('BaseButton', () => {
           default: 'Botão',
         },
       })
-      
+
       expect(wrapper.attributes('aria-label')).toBe('Botão de teste')
     })
   })
@@ -326,7 +327,7 @@ describe('BaseButton', () => {
           default: 'Botão',
         },
       })
-      
+
       expect(wrapper.attributes('type')).toBe('button')
     })
 
@@ -339,7 +340,7 @@ describe('BaseButton', () => {
           default: 'Enviar',
         },
       })
-      
+
       expect(wrapper.attributes('type')).toBe('submit')
     })
 
@@ -352,7 +353,7 @@ describe('BaseButton', () => {
           default: 'Botão',
         },
       })
-      
+
       expect(wrapper.attributes('disabled')).toBeDefined()
     })
   })
@@ -368,7 +369,7 @@ describe('BaseButton', () => {
           default: 'Botão',
         },
       })
-      
+
       expect(wrapper.classes()).toContain('bg-white/80')
       expect(wrapper.classes()).toContain('text-gray-700')
       expect(wrapper.classes()).toContain('px-6')
@@ -385,11 +386,11 @@ describe('BaseButton', () => {
           default: 'Botão',
         },
       })
-      
+
       expect(wrapper.classes()).toContain('bg-gradient-to-r')
       expect(wrapper.classes()).toContain('from-red-500')
       expect(wrapper.classes()).toContain('disabled:opacity-50')
       expect(wrapper.attributes('disabled')).toBeDefined()
     })
   })
-}) 
+})
