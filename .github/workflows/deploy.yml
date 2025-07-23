@@ -18,6 +18,9 @@ jobs:
         run: npm ci
       - name: Build
         run: npm run build
+      - name: Create .env file in dist
+        run: |
+          echo "VITE_OMDB_API_KEY=${{ secrets.VITE_OMDB_API_KEY }}" > dist/.env
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
