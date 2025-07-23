@@ -78,7 +78,7 @@
       </BaseCard>
 
       <div class="text-center">
-        <p class="text-xs text-gray-500">© 2024 FilMerc. Todos os direitos reservados.</p>
+        <p class="text-xs text-gray-500">© 2025 FilMerc. Todos os direitos reservados.</p>
       </div>
     </div>
   </div>

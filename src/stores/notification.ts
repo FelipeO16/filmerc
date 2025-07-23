@@ -10,7 +10,7 @@ export const useNotificationStore = defineStore('notification', () => {
     const newNotification: Notification = {
       ...notification,
       id,
-      duration: notification.duration || 5000,
+      duration: notification.duration !== undefined ? notification.duration : 5000,
     }
 
     notifications.value.push(newNotification)
