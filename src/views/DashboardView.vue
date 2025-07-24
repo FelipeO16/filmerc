@@ -1,217 +1,86 @@
 <template>
   <div class="space-y-8">
-    <div class="md:flex md:items-center md:justify-between">
-      <div class="flex-1 min-w-0">
-        <h2
-          class="text-3xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent"
-        >
-          Dashboard
-        </h2>
-        <p class="mt-2 text-lg text-gray-600">
-          Bem-vindo de volta,
-          <span class="font-semibold text-blue-600">{{ authStore.user?.name }}</span
-          >! Aqui está o que está acontecendo com seu negócio de locadora de filmes.
-        </p>
-      </div>
-    </div>
+    <PageHeader
+      title="Dashboard"
+      description="Bem-vindo de volta, {{ authStore.user?.name }}! Aqui está o que está acontecendo com seu negócio de locadora de filmes."
+    />
 
     <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-      <BaseCard variant="glass">
-        <div class="p-6">
-          <div class="flex items-center">
-            <div class="flex-shrink-0">
-              <div
-                class="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg"
-              >
-                <el-icon class="h-6 w-6">
-                  <User class="text-white" />
-                </el-icon>
-              </div>
-            </div>
-            <div class="ml-4 w-0 flex-1">
-              <dl>
-                <dt class="text-sm font-semibold text-gray-600 truncate">Total de Usuários</dt>
-                <dd>
-                  <div class="text-2xl font-bold text-gray-900">{{ totalUsers }}</div>
-                </dd>
-              </dl>
-            </div>
-          </div>
-        </div>
-        <div
-          class="bg-gradient-to-r from-blue-50 to-indigo-50 px-6 py-5 border-t border-blue-200/50"
-        >
-          <div class="text-sm">
-            <BaseButton
-              variant="outline"
-              size="small"
-              @click="$router.push('/users')"
-              class="w-full text-xs"
-              icon="View"
-            >
-              Ver usuários
-            </BaseButton>
-          </div>
-        </div>
-      </BaseCard>
+      <StatCard
+        title="Total de Usuários"
+        :value="totalUsers"
+        :icon="User"
+        variant="blue"
+        action-text="Ver usuários"
+        @action="$router.push('/users')"
+      />
 
-      <BaseCard variant="glass">
-        <div class="p-6">
-          <div class="flex items-center">
-            <div class="flex-shrink-0">
-              <div
-                class="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl flex items-center justify-center shadow-lg"
-              >
-                <el-icon class="h-6 w-6">
-                  <UserFilled class="text-white" />
-                </el-icon>
-              </div>
-            </div>
-            <div class="ml-4 w-0 flex-1">
-              <dl>
-                <dt class="text-sm font-semibold text-gray-600 truncate">Clientes Ativos</dt>
-                <dd>
-                  <div class="text-2xl font-bold text-gray-900">{{ activeClients }}</div>
-                </dd>
-              </dl>
-            </div>
-          </div>
-        </div>
-        <div
-          class="bg-gradient-to-r from-green-50 to-emerald-50 px-6 py-5 border-t border-green-200/50"
-        >
-          <div class="text-sm">
-            <BaseButton
-              variant="outline"
-              size="small"
-              @click="$router.push('/clients')"
-              class="w-full text-xs"
-              icon="View"
-            >
-              Ver clientes
-            </BaseButton>
-          </div>
-        </div>
-      </BaseCard>
+      <StatCard
+        title="Clientes Ativos"
+        :value="activeClients"
+        :icon="UserFilled"
+        variant="green"
+        action-text="Ver clientes"
+        @action="$router.push('/clients')"
+      />
 
-      <BaseCard variant="glass">
-        <div class="p-6">
-          <div class="flex items-center">
-            <div class="flex-shrink-0">
-              <div
-                class="w-12 h-12 bg-gradient-to-br from-yellow-500 to-orange-600 rounded-xl flex items-center justify-center shadow-lg"
-              >
-                <el-icon class="h-6 w-6">
-                  <Film class="text-white" />
-                </el-icon>
-              </div>
-            </div>
-            <div class="ml-4 w-0 flex-1">
-              <dl>
-                <dt class="text-sm font-semibold text-gray-600 truncate">Locações Ativas</dt>
-                <dd>
-                  <div class="text-2xl font-bold text-gray-900">{{ activeRentals }}</div>
-                </dd>
-              </dl>
-            </div>
-          </div>
-        </div>
-        <div
-          class="bg-gradient-to-r from-yellow-50 to-orange-50 px-6 py-5 border-t border-yellow-200/50"
-        >
-          <div class="text-sm">
-            <BaseButton
-              variant="outline"
-              size="small"
-              @click="$router.push('/rentals')"
-              class="w-full text-xs"
-              icon="View"
-            >
-              Ver locações
-            </BaseButton>
-          </div>
-        </div>
-      </BaseCard>
+      <StatCard
+        title="Locações Ativas"
+        :value="activeRentals"
+        :icon="Film"
+        variant="yellow"
+        action-text="Ver locações"
+        @action="$router.push('/rentals')"
+      />
 
-      <BaseCard variant="glass">
-        <div class="p-6">
-          <div class="flex items-center">
-            <div class="flex-shrink-0">
-              <div
-                class="w-12 h-12 bg-gradient-to-br from-red-500 to-pink-600 rounded-xl flex items-center justify-center shadow-lg"
-              >
-                <el-icon class="h-6 w-6">
-                  <Warning class="text-white" />
-                </el-icon>
-              </div>
-            </div>
-            <div class="ml-4 w-0 flex-1">
-              <dl>
-                <dt class="text-sm font-semibold text-gray-600 truncate">Locações em Atraso</dt>
-                <dd>
-                  <div class="text-2xl font-bold text-gray-900">{{ overdueRentals }}</div>
-                </dd>
-              </dl>
-            </div>
-          </div>
-        </div>
-        <div class="bg-gradient-to-r from-red-50 to-pink-50 px-6 py-5 border-t border-red-200/50">
-          <div class="text-sm">
-            <BaseButton
-              variant="outline"
-              size="small"
-              @click="$router.push('/rentals?filter=overdue')"
-              class="w-full text-xs"
-              icon="View"
-            >
-              Ver atrasos
-            </BaseButton>
-          </div>
-        </div>
-      </BaseCard>
+      <StatCard
+        title="Locações em Atraso"
+        :value="overdueRentals"
+        :icon="Warning"
+        variant="red"
+        action-text="Ver atrasos"
+        @action="$router.push('/rentals?filter=overdue')"
+      />
     </div>
 
     <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
-      <BaseCard variant="glass" padding="large">
-        <h3 class="text-xl font-bold text-gray-900 mb-6">Ações Rápidas</h3>
-        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          <BaseButton
-            variant="gradient"
-            @click="$router.push('/clients/create')"
-            class="justify-center h-11"
-            icon="Plus"
-          >
-            Adicionar Cliente
-          </BaseButton>
+      <QuickActionCard title="Ações Rápidas">
+        <BaseButton
+          variant="gradient"
+          @click="$router.push('/clients/create')"
+          class="justify-center h-11"
+          icon="Plus"
+        >
+          Adicionar Cliente
+        </BaseButton>
 
-          <BaseButton
-            variant="gradient"
-            @click="$router.push('/rentals/create')"
-            class="justify-center h-11"
-            icon="DocumentAdd"
-          >
-            Nova Locação
-          </BaseButton>
+        <BaseButton
+          variant="gradient"
+          @click="$router.push('/rentals/create')"
+          class="justify-center h-11"
+          icon="DocumentAdd"
+        >
+          Nova Locação
+        </BaseButton>
 
-          <BaseButton
-            variant="outline"
-            @click="$router.push('/movies')"
-            class="justify-center h-11"
-            icon="Search"
-          >
-            Buscar Filmes
-          </BaseButton>
+        <BaseButton
+          variant="outline"
+          @click="$router.push('/movies')"
+          class="justify-center h-11"
+          icon="Search"
+        >
+          Buscar Filmes
+        </BaseButton>
 
-          <BaseButton
-            variant="outline"
-            @click="$router.push('/users/create')"
-            class="justify-center h-11"
-            icon="UserFilled"
-          >
-            Adicionar Usuário
-          </BaseButton>
-        </div>
-      </BaseCard>
+        <BaseButton
+          variant="outline"
+          @click="$router.push('/users/create')"
+          class="justify-center h-11"
+          icon="UserFilled"
+        >
+          Adicionar Usuário
+        </BaseButton>
+      </QuickActionCard>
 
       <BaseCard variant="glass" padding="large">
         <h3 class="text-xl font-bold text-gray-900 mb-6">Próximas Devoluções</h3>
@@ -328,6 +197,9 @@ import { useClientStore } from '@/stores/client'
 import { useRentalStore } from '@/stores/rental'
 import BaseCard from '@/components/atoms/BaseCard.vue'
 import BaseButton from '@/components/atoms/BaseButton.vue'
+import PageHeader from '@/components/molecules/PageHeader.vue'
+import StatCard from '@/components/molecules/StatCard.vue'
+import QuickActionCard from '@/components/molecules/QuickActionCard.vue'
 import { User, UserFilled, Calendar, Document, Film, Warning } from '@element-plus/icons-vue'
 import { format } from 'date-fns'
 
