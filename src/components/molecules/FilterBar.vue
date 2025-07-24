@@ -70,17 +70,17 @@ interface Filter {
 
 interface Props {
   filters: Filter[]
-  modelValue: Record<string, unknown>
+  modelValue: Record<string, string | number | undefined>
 }
 
 const props = defineProps<Props>()
 
 const emit = defineEmits<{
-  'update:modelValue': [value: Record<string, unknown>]
-  'filter-change': [value: Record<string, unknown>]
+  'update:modelValue': [value: Record<string, string | number | undefined>]
+  'filter-change': [value: Record<string, string | number | undefined>]
 }>()
 
-const filterValues = ref<Record<string, unknown>>({ ...props.modelValue })
+const filterValues = ref<Record<string, string | number | undefined>>({ ...props.modelValue })
 
 props.filters.forEach(filter => {
   if (!(filter.key in filterValues.value)) {
@@ -97,7 +97,7 @@ function handleFilterChange() {
 }
 
 function clearFilters() {
-  const clearedFilters: Record<string, unknown> = {}
+  const clearedFilters: Record<string, string | number | undefined> = {}
   props.filters.forEach(filter => {
     clearedFilters[filter.key] = ''
   })
