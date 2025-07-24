@@ -9,7 +9,7 @@
       <StatCard
         title="Total de Usuários"
         :value="totalUsers"
-        :icon="User"
+        icon="User"
         variant="blue"
         action-text="Ver usuários"
         @action="$router.push('/users')"
@@ -18,7 +18,7 @@
       <StatCard
         title="Clientes Ativos"
         :value="activeClients"
-        :icon="UserFilled"
+        icon="UserFilled"
         variant="green"
         action-text="Ver clientes"
         @action="$router.push('/clients')"
@@ -27,7 +27,7 @@
       <StatCard
         title="Locações Ativas"
         :value="activeRentals"
-        :icon="Film"
+        icon="Film"
         variant="yellow"
         action-text="Ver locações"
         @action="$router.push('/rentals')"
@@ -36,7 +36,7 @@
       <StatCard
         title="Locações em Atraso"
         :value="overdueRentals"
-        :icon="Warning"
+        icon="Warning"
         variant="red"
         action-text="Ver atrasos"
         @action="$router.push('/rentals?filter=overdue')"
@@ -200,7 +200,7 @@ import BaseButton from '@/components/atoms/BaseButton.vue'
 import PageHeader from '@/components/molecules/PageHeader.vue'
 import StatCard from '@/components/molecules/StatCard.vue'
 import QuickActionCard from '@/components/molecules/QuickActionCard.vue'
-import { User, UserFilled, Calendar, Document, Film, Warning } from '@element-plus/icons-vue'
+import { Calendar, Document } from '@element-plus/icons-vue'
 import { format } from 'date-fns'
 
 const authStore = useAuthStore()

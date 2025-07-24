@@ -46,14 +46,14 @@
 </template>
 
 <script setup lang="ts">
-import { computed, Component } from 'vue'
+import { computed } from 'vue'
 import BaseCard from '../atoms/BaseCard.vue'
 import BaseButton from '../atoms/BaseButton.vue'
 
 interface Props {
   title: string
   value: string | number
-  icon: Component
+  icon: string
   variant?: 'blue' | 'green' | 'yellow' | 'red'
   actionText: string
 }
