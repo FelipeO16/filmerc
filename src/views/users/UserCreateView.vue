@@ -159,7 +159,7 @@ async function handleSubmit() {
 
     const success = await userStore.createUser({
       name: form.name,
-      document: form.document,
+      document: form.document.replace(/\D/g, ''),
       password: form.password,
       status: form.status as UserStatus,
     })
