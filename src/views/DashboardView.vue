@@ -2,7 +2,7 @@
   <div class="space-y-8">
     <PageHeader
       title="Dashboard"
-      description="Bem-vindo de volta, {{ authStore.user?.name }}! Aqui está o que está acontecendo com seu negócio de locadora de filmes."
+      :description="`Bem-vindo de volta,  ${authStore.user?.name}! Aqui está o que está acontecendo com seu negócio de locadora de filmes.`"
     />
 
     <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
