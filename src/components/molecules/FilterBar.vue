@@ -50,7 +50,6 @@
 
 <script setup lang="ts">
 import { ref, watch } from 'vue'
-import type { Component } from 'vue'
 import BaseCard from '../atoms/BaseCard.vue'
 import BaseInput from '../atoms/BaseInput.vue'
 import BaseButton from '../atoms/BaseButton.vue'
@@ -65,7 +64,7 @@ interface Filter {
   label: string
   type: 'text' | 'select'
   placeholder?: string
-  icon?: Component
+  icon?: string
   options?: FilterOption[]
 }
 

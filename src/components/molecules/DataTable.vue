@@ -19,7 +19,7 @@
         <tbody class="bg-white/50 divide-y divide-gray-200/30">
           <tr
             v-for="(item, index) in items"
-            :key="item.id || index"
+            :key="String(item.id || index)"
             class="hover:bg-white/80 transition-colors"
           >
             <td
@@ -82,7 +82,18 @@ withDefaults(defineProps<Props>(), {
   emptyMessage: 'Tente ajustar os filtros ou adicione novos itens.'
 })
 
-function getValue(item: Record<string, unknown>, key: string): unknown {
-  return key.split('.').reduce((obj, k) => (obj as Record<string, unknown>)?.[k], item)
+function getValue(item: Record<string, unknown>, key: string): string {
+  const keys = key.split('.')
+  let value: unknown = item
+  
+  for (const k of keys) {
+    if (value && typeof value === 'object' && k in value) {
+      value = (value as Record<string, unknown>)[k]
+    } else {
+      return ''
+    }
+  }
+  
+  return value ? String(value) : ''
 }
 </script> 
