@@ -191,7 +191,21 @@ const form = reactive({
   },
 })
 
-const errors = reactive({
+const errors = reactive<{
+  name: string
+  lastName: string
+  cpf: string
+  phone: string
+  email: string
+  status: string
+  address: {
+    zipCode: string
+    street: string
+    neighborhood: string
+    city: string
+    state: string
+  }
+}>({
   name: '',
   lastName: '',
   cpf: '',
@@ -270,15 +284,17 @@ async function loadClient() {
 }
 
 function validateForm() {
-  Object.keys(errors).forEach((key) => {
-    if (key === 'address') {
-      Object.keys(errors.address).forEach((addressKey) => {
-        errors.address[addressKey as keyof typeof errors.address] = ''
-      })
-    } else {
-      errors[key as keyof typeof errors] = ''
-    }
-  })
+  errors.name = ''
+  errors.lastName = ''
+  errors.cpf = ''
+  errors.phone = ''
+  errors.email = ''
+  errors.status = ''
+  errors.address.zipCode = ''
+  errors.address.street = ''
+  errors.address.neighborhood = ''
+  errors.address.city = ''
+  errors.address.state = ''
 
   let isValid = true
 
